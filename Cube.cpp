@@ -5,7 +5,66 @@
 #include "Cube.h"
 using std::swap;
 
+void Cube::display() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    glColor3f(0, 0, 0);
+    glutSolidCube(0.99);
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j) {
+            glBegin(GL_POLYGON);
+            glColor3f(front[i][j].r, front[i][j].g, front[i][j].b);
+            glVertex3f(-0.5 + j * 0.34, 0.5 - i * 0.34, -0.5);
+            glVertex3f(-0.5 + j * 0.34, 0.18 - i * 0.34, -0.5);
+            glVertex3f(-0.18 + j * 0.34, 0.18 - i * 0.34, -0.5);
+            glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, -0.5);
+            glEnd();
 
+            glBegin(GL_POLYGON);
+            glColor3f(back[i][j].r, back[i][j].g, back[i][j].b);
+            glVertex3f(-0.5 + j * 0.34, 0.5 - i * 0.34, 0.5);
+            glVertex3f(-0.5 + j * 0.34, 0.18 - i * 0.34, 0.5);
+            glVertex3f(-0.18 + j * 0.34, 0.18 - i * 0.34, 0.5);
+            glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, 0.5);
+            glEnd();
+
+            glBegin(GL_POLYGON);
+            glColor3f(right[i][j].r, right[i][j].g, right[i][j].b);
+            glVertex3f(0.5, -0.5 + i * 0.34, -0.5 + j * 0.34);
+            glVertex3f(0.5, -0.5 + i * 0.34, -0.18 + j * 0.34);
+            glVertex3f(0.5, -0.18 + i * 0.34, -0.18 + j * 0.34);
+            glVertex3f(0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
+            glEnd();
+
+            glBegin(GL_POLYGON);
+            glColor3f(left[i][j].r, left[i][j].g, left[i][j].b);
+            glVertex3f(-0.5, -0.5 + i * 0.34, -0.5 + j * 0.34);
+            glVertex3f(-0.5, -0.5 + i * 0.34, -0.18 + j * 0.34);
+            glVertex3f(-0.5, -0.18 + i * 0.34, -0.18 + j * 0.34);
+            glVertex3f(-0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
+            glEnd();
+
+            glBegin(GL_POLYGON);
+            glColor3f(down[i][j].r, down[i][j].g, down[i][j].b);
+            glVertex3f(-0.5 + i * 0.34, -0.5, -0.5 + j * 0.34);
+            glVertex3f(-0.18 + i * 0.34, -0.5, -0.5 + j * 0.34);
+            glVertex3f(-0.18 + i * 0.34, -0.5, -0.18 + j * 0.34);
+            glVertex3f(-0.5 + i * 0.34, -0.5, -0.18 + j * 0.34);
+            glEnd();
+
+            glBegin(GL_POLYGON);
+            glColor3f(up[i][j].r, up[i][j].g, up[i][j].b);
+            glVertex3f(-0.5 + i * 0.34, 0.5, -0.5 + j * 0.34);
+            glVertex3f(-0.18 + i * 0.34, 0.5, -0.5 + j * 0.34);
+            glVertex3f(-0.18 + i * 0.34, 0.5, -0.18 + j * 0.34);
+            glVertex3f(-0.5 + i * 0.34, 0.5, -0.18 + j * 0.34);
+            glEnd();
+
+        }
+    glFlush();
+    glutSwapBuffers();
+
+}
 
 void rotate(rgbPairs matrix[3][3]) {
     for (int i = 0; i < 3; i++) {
@@ -44,7 +103,8 @@ void Cube::U() {
     swap(right[2][0], right[2][2]);
     swap(left[2][0],left[2][2]);
     rotate(up);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::D_() {
@@ -58,7 +118,8 @@ void Cube::D_() {
     swap(front[2][1],right[0][1]);
     swap(front[2][2],right[0][2]);
     rotate(down);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::F() {
@@ -72,7 +133,8 @@ void Cube::F() {
     swap(up[1][0], left[1][0]);
     swap(up[2][0],left[2][0]);
     rotate(front);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::R_() {
@@ -86,7 +148,8 @@ void Cube::R_() {
     swap(front[1][2],up[2][1]);
     swap(front[0][2],up[2][2]);
     rotate(left);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::B_() {
@@ -100,7 +163,8 @@ void Cube::B_() {
     swap(right[1][2],up[1][2]);
     swap(right[0][2],up[2][2]);
     rotate(back);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::L() {
@@ -114,7 +178,8 @@ void Cube::L() {
     swap(up[0][1],back[1][0]);
     swap(up[0][2],back[2][0]);
     rotate(right);
-    glutPostRedisplay();
+    display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::R() {

@@ -10,10 +10,13 @@
 #include <ctime>
 #include <cstdlib>
 #include <GL/freeglut.h>
+#include <unistd.h>
+#include <chrono>
+#include <thread>
 #ifndef RUBIK_S_CUBE_CUBECLASS_H
 #define RUBIK_S_CUBE_CUBECLASS_H
 using std::pair;
-
+using namespace std::chrono_literals;
 struct rgbPairs{
     GLfloat r;
     GLfloat g;
@@ -50,7 +53,7 @@ public:
     Cube(FILE *p);
     Cube();
     ~Cube() = default;
-
+    void display();
     void F();
     void B();
     void L();

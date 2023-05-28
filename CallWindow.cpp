@@ -5,7 +5,6 @@
 #include "CallWindow.h"
 #include "drawCubes.h"
 #include "Cube.h"
-#include <unistd.h>
 
 
 GLfloat rotate_x = 0;
@@ -13,10 +12,11 @@ GLfloat rotate_y = 0;
 Cube CallWindow::cube;
 
 
+
 void CallWindow::Randomise(){
     srand(time(nullptr));
     int operation;
-    for (int i = 0; i < 20; ++i){
+    for (int i = 0; i < 10; ++i){
         operation = rand() % 12;
         switch (operation) {
             case 1:
@@ -56,8 +56,10 @@ void CallWindow::Randomise(){
                 cube.L();
                 break;
         }
+        display();
+        sleep(1);
     }
-    glutPostRedisplay();
+
 
 }
 
