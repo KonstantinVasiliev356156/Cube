@@ -22,6 +22,8 @@ struct rgbPairs{
     GLfloat g;
     GLfloat b;
 
+
+
     bool operator==(rgbPairs other){
         return r == other.r && g == other.g && b == other.b;
     }
@@ -42,15 +44,13 @@ const int side_size = sizeof(rgbPairs) * 9;
 
 class Cube {
 public:
-    rgbPairs front[3][3];
-    rgbPairs back[3][3];
-    rgbPairs left[3][3];
-    rgbPairs right[3][3];
-    rgbPairs up[3][3];
-    rgbPairs down[3][3];
-    char sides_l[6] = {'u','d','f','b','l','r'};
-    rgbPairs* sides[6] = {(rgbPairs*)up, (rgbPairs*)down, (rgbPairs*)front, (rgbPairs*)back, (rgbPairs*)left, (rgbPairs*)right};
-    Cube(FILE *p);
+    rgbPairs** front;
+    rgbPairs** back;
+    rgbPairs** left;
+    rgbPairs** right;
+    rgbPairs** up;
+    rgbPairs** down;
+    rgbPairs*** sides[6] = {&up,&down,&front,&back,&left,&right};
     Cube();
     ~Cube() = default;
     void display();
@@ -71,6 +71,7 @@ public:
     rgbPairs find_another_color(char, int , int );
     void cross_turn(int);
     void Phase_1();
+    void Phase_2();
     void Solve();
 };
 

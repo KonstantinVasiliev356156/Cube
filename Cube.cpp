@@ -7,7 +7,6 @@ using std::swap;
 
 void Cube::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
     glColor3f(0, 0, 0);
     glutSolidCube(0.99);
     for (int i = 0; i < 3; ++i)
@@ -66,7 +65,7 @@ void Cube::display() {
 
 }
 
-void rotate(rgbPairs matrix[3][3]) {
+void rotate(rgbPairs** matrix) {
     for (int i = 0; i < 3; i++) {
         for (int j = i; j < 3; j++) {
             rgbPairs tmp = matrix[i][j];
@@ -85,6 +84,20 @@ void rotate(rgbPairs matrix[3][3]) {
 }
 
 Cube::Cube() {
+    up = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    down = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    back = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    right = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    front = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    left = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
+    for(int i = 0; i < 3; i++){
+        front[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+        left[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+        up[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+        down[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+        back[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+        right[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+    }
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
             front[i][j] = g;
@@ -104,7 +117,7 @@ void Cube::U() {
     swap(left[2][0],left[2][2]);
     rotate(up);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::D_() {
@@ -119,7 +132,7 @@ void Cube::D_() {
     swap(front[2][2],right[0][2]);
     rotate(down);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::F() {
@@ -134,7 +147,7 @@ void Cube::F() {
     swap(up[2][0],left[2][0]);
     rotate(front);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::R_() {
@@ -147,9 +160,9 @@ void Cube::R_() {
     swap(front[2][2],up[2][0]);
     swap(front[1][2],up[2][1]);
     swap(front[0][2],up[2][2]);
-    rotate(left);
+    rotate(right);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::B_() {
@@ -164,7 +177,7 @@ void Cube::B_() {
     swap(right[0][2],up[2][2]);
     rotate(back);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::L() {
@@ -177,9 +190,9 @@ void Cube::L() {
     swap(up[0][0], back[0][0]);
     swap(up[0][1],back[1][0]);
     swap(up[0][2],back[2][0]);
-    rotate(right);
+    rotate(left);
     display();
-    std::this_thread::sleep_for(500ms);
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::R() {
@@ -221,6 +234,7 @@ void Cube::L_() {
 
 void Cube::Solve() {
     Phase_1();
+    Phase_2();
 }
 
 int Cube::find_side(rgbPairs color){
@@ -248,9 +262,9 @@ rgbPairs Cube::find_another_color(char side, int i, int j){
     if(side == 'l'){
         if(i == 1){
             if(j == 0){
-                return back[1][2];
-            } else{
                 return front[1][0];
+            } else{
+                return back[1][0];
             }
         } else if (i == 0){
             return down[0][1];
@@ -264,21 +278,21 @@ rgbPairs Cube::find_another_color(char side, int i, int j){
             if(j == 0){
                 return front[1][2];
             } else{
-                return back[1][0];
+                return back[1][2];
             }
         } else if (i == 0){
-            return up[2][1];
-        } else {
             return down[2][1];
+        } else {
+            return up[2][1];
         }
     }
 
     if(side == 'u'){
         if(i == 1){
             if(j == 0){
-                return front[0][1];
-            } else{
                 return back[0][1];
+            } else{
+                return front[0][1];
             }
         } else if (i == 0){
             return left[2][1];
@@ -304,12 +318,12 @@ rgbPairs Cube::find_another_color(char side, int i, int j){
     if(side == 'f'){
         if(i == 1){
             if(j == 0){
-                return left[1][2];
+                return left[1][0];
             } else{
                 return right[1][0];
             }
         } else if (i == 0){
-            return up[1][0];
+            return up[1][2];
         } else {
             return down[1][0];
         }
@@ -318,14 +332,14 @@ rgbPairs Cube::find_another_color(char side, int i, int j){
     if(side == 'b'){
         if(i == 1){
             if(j == 0){
-                return right[1][2];
+                return left[1][2];
             } else{
-                return left[1][0];
+                return right[1][2];
             }
         } else if (i == 0){
-            return up[1][2];
+            return up[1][0];
         } else {
-            return down[2][1];
+            return down[1][2];
         }
     }
 }
@@ -357,7 +371,7 @@ void Cube::cross_turn(int right_side){
 void Cube::Phase_1() {
     int side_counter = 0,right_side;
     rgbPairs another_color;
-    rgbPairs tmp_side[3][3];
+    rgbPairs** tmp_side;
 
     while (up[1][2] != w || up[1][0] != w || up[0][1] != w || up[2][1] != w){
         side_counter = (side_counter+1)%6;
@@ -368,32 +382,28 @@ void Cube::Phase_1() {
             if(down[1][0] == w){
                 another_color = find_another_color('d',1,0);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     F();
                     F();
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     B();
                     B();
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     L();
                     L();
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     R();
                     R();
@@ -402,32 +412,28 @@ void Cube::Phase_1() {
             if(down[1][2] == w){
                 another_color = find_another_color('d',1,2);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     F();
                     F();
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     B();
                     B();
                 } else if(right_side == 4){
-                    while (tmp_side[0][1] != another_color && (find_another_color('l',0,1) != w)){
+                    while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     L();
                     L();
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     R();
                     R();
@@ -436,32 +442,28 @@ void Cube::Phase_1() {
             if(down[0][1] == w){
                 another_color = find_another_color('d',0,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     F();
                     F();
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     B();
                     B();
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     L();
                     L();
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     R();
                     R();
@@ -470,32 +472,28 @@ void Cube::Phase_1() {
             if(down[2][1] == w){
                 another_color = find_another_color('d',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     F();
                     F();
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     B();
                     B();
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     L();
                     L();
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     R();
                     R();
@@ -517,29 +515,25 @@ void Cube::Phase_1() {
             } else if (front[2][1] == w){
                 another_color = find_another_color('f',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
@@ -548,41 +542,37 @@ void Cube::Phase_1() {
                 F();
                 another_color = find_another_color('f',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
             }
         } else if (side_counter == 3){
-            if(back[1][2] == w){
+            if(back[1][0] == w){
                 L_();
                 D();
                 L();
                 side_counter = 0;
                 continue;
-            } else if (back[1][0] == w){
+            } else if (back[1][2] == w){
                 R();
                 D();
                 R_();
@@ -591,29 +581,25 @@ void Cube::Phase_1() {
             } else if (back[2][1] == w){
                 another_color = find_another_color('b',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
@@ -622,41 +608,37 @@ void Cube::Phase_1() {
                 B();
                 another_color = find_another_color('b',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
             }
         } else if (side_counter == 4){
-            if(left[1][2] == w){
+            if(left[1][0] == w){
                 F_();
                 D();
                 F();
                 side_counter = 0;
                 continue;
-            } else if (left[1][0] == w){
+            } else if (left[1][2] == w){
                 B();
                 D();
                 B_();
@@ -665,60 +647,52 @@ void Cube::Phase_1() {
             } else if (left[0][1] == w){
                 another_color = find_another_color('l',0,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
             } else if (left[2][1] == w){
                 L();
                 L();
-                another_color = find_another_color('l',2,1);
+                another_color = find_another_color('b',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
@@ -739,65 +713,100 @@ void Cube::Phase_1() {
             } else if (right[0][1] == w){
                 another_color = find_another_color('r',0,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
             } else if (right[2][1] == w){
                 R();
                 R();
-                another_color = find_another_color('r',2,1);
+                another_color = find_another_color('b',2,1);
                 right_side = find_side(another_color);
-                memcpy(tmp_side,sides[right_side],side_size);
+                tmp_side = *sides[right_side];
                 if(right_side == 2){
                     while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 3){
                     while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 4){
                     while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 } else if(right_side == 5){
                     while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
                         D();
-                        memcpy(tmp_side,sides[right_side],side_size);
                     }
                     cross_turn(right_side);
                 }
             }
         }
-        std::cout << "cringe";
+    }
+}
+
+void Cube::Phase_2() {
+    int side_counter = 0;
+    rgbPairs** tmp_side;
+    while (up[0][0] != w || up[0][2] != w || up[2][0] != w || up[2][2] != w){
+        side_counter = (side_counter+1)%6;
+        if(side_counter == 0){
+            continue;
+        }
+        if(side_counter == 1){
+            if(down[0][0] == w){
+                F_();
+                R_();
+                D();
+                D();
+                R();
+                F();
+            } else if(down[2][0] == w){
+                R_();
+                B_();
+                D();
+                D();
+                B();
+                R();
+            } else if(down[0][2] == w){
+                L_();
+                F_();
+                D();
+                D();
+                F();
+                L();
+            } else if(down[2][2] == w){
+                B_();
+                L_();
+                D();
+                D();
+                L();
+                B();
+            }
+        } else if(side_counter == 2){
+
+        }
     }
 }
