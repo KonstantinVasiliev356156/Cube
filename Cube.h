@@ -45,7 +45,6 @@ public:
     rgbPairs right[3][3];
     rgbPairs up[3][3];
     rgbPairs down[3][3];
-    char sides_l[6] = {'u','d','f','b','l','r'};
     rgbPairs* sides[6] = {(rgbPairs*)up, (rgbPairs*)down, (rgbPairs*)front, (rgbPairs*)back, (rgbPairs*)left, (rgbPairs*)right};
     Cube(FILE *p);
     Cube();

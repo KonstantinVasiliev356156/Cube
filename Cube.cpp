@@ -44,7 +44,8 @@ void Cube::U() {
     swap(right[2][0], right[2][2]);
     swap(left[2][0],left[2][2]);
     rotate(up);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::D_() {
@@ -58,7 +59,8 @@ void Cube::D_() {
     swap(front[2][1],right[0][1]);
     swap(front[2][2],right[0][2]);
     rotate(down);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::F() {
@@ -72,7 +74,8 @@ void Cube::F() {
     swap(up[1][0], left[1][0]);
     swap(up[2][0],left[2][0]);
     rotate(front);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::R_() {
@@ -86,7 +89,8 @@ void Cube::R_() {
     swap(front[1][2],up[2][1]);
     swap(front[0][2],up[2][2]);
     rotate(left);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::B_() {
@@ -100,7 +104,8 @@ void Cube::B_() {
     swap(right[1][2],up[1][2]);
     swap(right[0][2],up[2][2]);
     rotate(back);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::L() {
@@ -114,7 +119,8 @@ void Cube::L() {
     swap(up[0][1],back[1][0]);
     swap(up[0][2],back[2][0]);
     rotate(right);
-    glutPostRedisplay();
+    CallWindow::display();
+    std::this_thread::sleep_for(500ms);
 }
 
 void Cube::R() {
@@ -733,6 +739,5 @@ void Cube::Phase_1() {
                 }
             }
         }
-        std::cout << "cringe";
     }
 }
