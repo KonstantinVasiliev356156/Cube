@@ -234,7 +234,7 @@ void Cube::L_() {
 
 void Cube::Solve() {
     Phase_1();
-    Phase_2();
+
 }
 
 int Cube::find_side(rgbPairs color){
@@ -672,7 +672,7 @@ void Cube::Phase_1() {
             } else if (left[2][1] == w){
                 L();
                 L();
-                another_color = find_another_color('b',2,1);
+                another_color = find_another_color('l',0,1);
                 right_side = find_side(another_color);
                 tmp_side = *sides[right_side];
                 if(right_side == 2){
@@ -738,7 +738,7 @@ void Cube::Phase_1() {
             } else if (right[2][1] == w){
                 R();
                 R();
-                another_color = find_another_color('b',2,1);
+                another_color = find_another_color('r',0,1);
                 right_side = find_side(another_color);
                 tmp_side = *sides[right_side];
                 if(right_side == 2){
@@ -806,7 +806,77 @@ void Cube::Phase_2() {
                 B();
             }
         } else if(side_counter == 2){
-
+            if(front[2][0] == w){
+                F_();
+                D_();
+                F();
+            } else if(front[2][2] == w){
+                F();
+                D();
+                F_();
+            } else if(front[0][0] == w){
+                F_();
+                D();
+                F();
+            } else if(front[2][0] == w){
+                F();
+                D_();
+                F_();
+            }
+        } else if (side_counter == 3){
+            if(back[2][2] == w){
+                B_();
+                D_();
+                B();
+            } else if(back[2][0] == w){
+                B();
+                D();
+                B_();
+            } else if(back[0][2] == w){
+                B_();
+                D();
+                B();
+            } else if(back[0][0] == w){
+                B();
+                D_();
+                B_();
+            }
+        } else if (side_counter == 4){
+            if(left[0][2] == w){
+                L_();
+                D_();
+                L();
+            } else if(left[0][0] == w){
+                L();
+                D();
+                L_();
+            } else if(left[2][2] == w){
+                L_();
+                D();
+                L();
+            } else if(left[2][0] == w){
+                L();
+                D_();
+                L_();
+            }
+        } else if (side_counter == 5){
+            if(right[0][0] == w){
+                R_();
+                D_();
+                R();
+            } else if(right[0][2] == w){
+                R();
+                D();
+                R_();
+            } else if(right[2][0] == w){
+                R_();
+                D();
+                R();
+            } else if(right[2][2] == w){
+                R();
+                D_();
+                R_();
+            }
         }
     }
 }
