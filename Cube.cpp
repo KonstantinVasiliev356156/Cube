@@ -19,21 +19,29 @@ void Cube::display() {
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, -0.5);
             glEnd();
 
+            glRotatef(-90.0f,0.0f,0.0f,1.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(back[i][j].r, back[i][j].g, back[i][j].b);
+            glColor3f(back[j][i].r, back[j][i].g, back[j][i].b);
             glVertex3f(-0.5 + j * 0.34, 0.5 - i * 0.34, 0.5);
             glVertex3f(-0.5 + j * 0.34, 0.18 - i * 0.34, 0.5);
             glVertex3f(-0.18 + j * 0.34, 0.18 - i * 0.34, 0.5);
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, 0.5);
             glEnd();
 
+            glRotatef(90.0f,0.0f,0.0f,1.0f);
+            glRotatef(90.0f,1.0f,0.0f,0.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(right[i][j].r, right[i][j].g, right[i][j].b);
+            glColor3f(right[j][i].r, right[j][i].g, right[j][i].b);
             glVertex3f(0.5, -0.5 + i * 0.34, -0.5 + j * 0.34);
             glVertex3f(0.5, -0.5 + i * 0.34, -0.18 + j * 0.34);
             glVertex3f(0.5, -0.18 + i * 0.34, -0.18 + j * 0.34);
             glVertex3f(0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
+
+            glRotatef(-90.0f,1.0f,0.0f,0.0f);
+            glRotatef(180.0f,1.0f,0.0f,0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(left[i][j].r, left[i][j].g, left[i][j].b);
@@ -43,13 +51,17 @@ void Cube::display() {
             glVertex3f(-0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
 
+            glRotatef(-180.0f,1.0f,0.0f,0.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(down[i][j].r, down[i][j].g, down[i][j].b);
+            glColor3f(down[j][i].r, down[j][i].g, down[j][i].b);
             glVertex3f(-0.5 + i * 0.34, -0.5, -0.5 + j * 0.34);
             glVertex3f(-0.18 + i * 0.34, -0.5, -0.5 + j * 0.34);
             glVertex3f(-0.18 + i * 0.34, -0.5, -0.18 + j * 0.34);
             glVertex3f(-0.5 + i * 0.34, -0.5, -0.18 + j * 0.34);
             glEnd();
+
+            glRotatef(90.0f,0.0f,1.0f,0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(up[i][j].r, up[i][j].g, up[i][j].b);
@@ -58,6 +70,8 @@ void Cube::display() {
             glVertex3f(-0.18 + i * 0.34, 0.5, -0.18 + j * 0.34);
             glVertex3f(-0.5 + i * 0.34, 0.5, -0.18 + j * 0.34);
             glEnd();
+
+            glRotatef(-90.0f,0.0f,1.0f,0.0f);
 
         }
     glFlush();
@@ -79,6 +93,24 @@ void rotate(rgbPairs** matrix) {
             rgbPairs tmp = matrix[i][j];
             matrix[i][j] = matrix[i][2 - j];
             matrix[i][2 - j] = tmp;
+        }
+    }
+}
+
+void rotate_back(rgbPairs** matrix){
+    for (int i = 0; i < 3; i++) {
+        for (int j = i; j < 3; j++) {
+            rgbPairs tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 1; j++) {
+            rgbPairs tmp = matrix[j][i];
+            matrix[j][i] = matrix[2 - j][i];
+            matrix[2 - j][i] = tmp;
         }
     }
 }
@@ -107,89 +139,80 @@ Cube::Cube() {
             up[i][j] = w;
             down[i][j] = y;
         }
+    void ((*functptr[8]))();
+    functptr[0] = L();
 }
 
 void Cube::U() {
-    swap(front[0], left[2]);
+    swap(front[0], left[0]);
     swap(front[0], back[0]);
-    swap(front[0], right[2]);
-    swap(right[2][0], right[2][2]);
-    swap(left[2][0],left[2][2]);
+    swap(front[0], right[0]);
     rotate(up);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::D_() {
-    swap(front[2][0], left[0][2]);
-    swap(front[2][1],left[0][1]);
-    swap(front[2][2],left[0][0]);
-    swap(front[2][0],back[2][2]);
-    swap(front[2][1],back[2][1]);
-    swap(front[2][2],back[2][0]);
-    swap(front[2][0],right[0][0]);
-    swap(front[2][1],right[0][1]);
-    swap(front[2][2],right[0][2]);
-    rotate(down);
-    display();
-    std::this_thread::sleep_for(100ms);
+    D();
+    D();
+    D();
 }
 
 void Cube::F() {
-    swap(up[0][0], right[2][0]);
-    swap(up[1][0],right[1][0]);
     swap(up[2][0], right[0][0]);
-    swap(up[0][0], down[2][0]);
-    swap(up[1][0], down[1][0]);
-    swap(up[2][0], down[0][0]);
-    swap(up[0][0], left[0][0]);
-    swap(up[1][0], left[1][0]);
-    swap(up[2][0],left[2][0]);
+    swap(up[2][1],right[1][0]);
+    swap(up[2][2], right[2][0]);
+    swap(up[2][0], down[0][2]);
+    swap(up[2][1], down[0][1]);
+    swap(up[2][2], down[0][0]);
+    swap(up[2][0], left[2][2]);
+    swap(up[2][1], left[1][2]);
+    swap(up[2][2],left[0][2]);
     rotate(front);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::R_() {
+    swap(front[0][2],down[0][2]);
+    swap(front[1][2],down[1][2]);
     swap(front[2][2],down[2][2]);
-    swap(front[1][2],down[2][1]);
-    swap(front[0][2],down[2][0]);
-    swap(front[2][2],back[0][2]);
-    swap(front[1][2],back[1][2]);
-    swap(front[0][2],back[2][2]);
-    swap(front[2][2],up[2][0]);
-    swap(front[1][2],up[2][1]);
-    swap(front[0][2],up[2][2]);
-    rotate(right);
+    swap(front[0][2],back[2][0]);
+    swap(front[1][2],back[1][0]);
+    swap(front[2][2],back[0][0]);
+    swap(front[0][2],up[0][2]);
+    swap(front[1][2],up[1][2]);
+    swap(front[2][2],up[2][2]);
+    rotate_back(right);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::B_() {
-    swap(right[2][2],down[2][2]);
-    swap(right[1][2],down[1][2]);
-    swap(right[0][2],down[0][2]);
-    swap(right[2][2],left[0][2]);
-    swap(right[1][2],left[1][2]);
-    swap(right[0][2],left[2][2]);
+    swap(right[0][2],down[2][2]);
+    swap(right[1][2],down[2][1]);
+    swap(right[2][2],down[2][0]);
+    swap(right[0][2],left[2][0]);
+    swap(right[1][2],left[1][0]);
+    swap(right[2][2],left[0][0]);
+    swap(right[0][2],up[0][0]);
+    swap(right[1][2],up[0][1]);
     swap(right[2][2],up[0][2]);
-    swap(right[1][2],up[1][2]);
-    swap(right[0][2],up[2][2]);
-    rotate(back);
+    rotate_back(back);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::L() {
-    swap(front[0][0],up[0][2]);
-    swap(front[1][0],up[0][1]);
-    swap(front[2][0],up[0][0]);
-    swap(up[0][2],down[0][0]);
-    swap(up[0][1], down[0][1]);
-    swap(up[0][0],down[0][2]);
-    swap(up[0][0], back[0][0]);
-    swap(up[0][1],back[1][0]);
-    swap(up[0][2],back[2][0]);
+    swap(front[0][0],down[0][0]);
+    swap(front[1][0],down[1][0]);
+    swap(front[2][0],down[2][0]);
+    swap(front[0][0],back[2][2]);
+    swap(front[1][0], back[1][2]);
+    swap(front[2][0],back[0][2]);
+    swap(front[0][0], up[0][0]);
+    swap(front[1][0],up[1][0]);
+    swap(front[2][0],up[2][0]);
     rotate(left);
     display();
     std::this_thread::sleep_for(100ms);
@@ -209,9 +232,12 @@ void Cube::U_() {
 }
 
 void Cube::D() {
-    D_();
-    D_();
-    D_();
+    swap(front[2], right[2]);
+    swap(front[2], back[2]);
+    swap(front[2], left[2]);
+    rotate(down);
+    display();
+    std::this_thread::sleep_for(100ms);
 }
 
 void Cube::F_() {
@@ -233,6 +259,34 @@ void Cube::L_() {
 }
 
 void Cube::Solve() {
+    rgbPairs** tmp;
+    for(int k = 0; k < 6; k++){
+        tmp = *sides[k];
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(tmp[i][j] == w){
+                    std::cout << 'w' << " ";
+                }
+                if(tmp[i][j] == y){
+                    std::cout << 'y' << " ";
+                }
+                if(tmp[i][j] == r){
+                    std::cout << 'r' << " ";
+                }
+                if(tmp[i][j] == g){
+                    std::cout << 'g' << " ";
+                }
+                if(tmp[i][j] == b){
+                    std::cout << 'b' << " ";
+                }
+                if(tmp[i][j] == o){
+                    std::cout << 'o' << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+        std::cout << "\n\n";
+    }
     Phase_1();
 
 }

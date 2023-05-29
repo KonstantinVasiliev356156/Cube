@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <chrono>
 #include <thread>
+#include<functional>
 #ifndef RUBIK_S_CUBE_CUBECLASS_H
 #define RUBIK_S_CUBE_CUBECLASS_H
 using std::pair;
@@ -51,6 +52,7 @@ public:
     rgbPairs** up;
     rgbPairs** down;
     rgbPairs*** sides[6] = {&up,&down,&front,&back,&left,&right};
+    std::function<void()>[6] rotations;
     Cube();
     ~Cube() = default;
     void display();

@@ -18,21 +18,29 @@ void drawFromConsist(Cube cube) {
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, -0.5);
             glEnd();
 
+            glRotatef(-90.0f,0.0f,0.0f,1.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(cube.back[i][j].r, cube.back[i][j].g, cube.back[i][j].b);
+            glColor3f(cube.back[j][i].r, cube.back[j][i].g, cube.back[j][i].b);
             glVertex3f(-0.5 + j * 0.34, 0.5 - i * 0.34, 0.5);
             glVertex3f(-0.5 + j * 0.34, 0.18 - i * 0.34, 0.5);
             glVertex3f(-0.18 + j * 0.34, 0.18 - i * 0.34, 0.5);
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, 0.5);
             glEnd();
 
+            glRotatef(90.0f,0.0f,0.0f,1.0f);
+            glRotatef(90.0f,1.0f,0.0f,0.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(cube.right[i][j].r, cube.right[i][j].g, cube.right[i][j].b);
+            glColor3f(cube.right[j][i].r, cube.right[j][i].g, cube.right[j][i].b);
             glVertex3f(0.5, -0.5 + i * 0.34, -0.5 + j * 0.34);
             glVertex3f(0.5, -0.5 + i * 0.34, -0.18 + j * 0.34);
             glVertex3f(0.5, -0.18 + i * 0.34, -0.18 + j * 0.34);
             glVertex3f(0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
+
+            glRotatef(-90.0f,1.0f,0.0f,0.0f);
+            glRotatef(180.0f,1.0f,0.0f,0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(cube.left[i][j].r, cube.left[i][j].g, cube.left[i][j].b);
@@ -42,13 +50,17 @@ void drawFromConsist(Cube cube) {
             glVertex3f(-0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
 
+            glRotatef(-180.0f,1.0f,0.0f,0.0f);
+
             glBegin(GL_POLYGON);
-            glColor3f(cube.down[i][j].r, cube.down[i][j].g, cube.down[i][j].b);
+            glColor3f(cube.down[j][i].r, cube.down[j][i].g, cube.down[j][i].b);
             glVertex3f(-0.5 + i * 0.34, -0.5, -0.5 + j * 0.34);
             glVertex3f(-0.18 + i * 0.34, -0.5, -0.5 + j * 0.34);
             glVertex3f(-0.18 + i * 0.34, -0.5, -0.18 + j * 0.34);
             glVertex3f(-0.5 + i * 0.34, -0.5, -0.18 + j * 0.34);
             glEnd();
+
+            glRotatef(90.0f,0.0f,1.0f,0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(cube.up[i][j].r, cube.up[i][j].g, cube.up[i][j].b);
@@ -58,6 +70,7 @@ void drawFromConsist(Cube cube) {
             glVertex3f(-0.5 + i * 0.34, 0.5, -0.18 + j * 0.34);
             glEnd();
 
+            glRotatef(-90.0f,0.0f,1.0f,0.0f);
         }
 }
 
