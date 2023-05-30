@@ -3,7 +3,9 @@
 //
 
 #include "Cube.h"
+
 using std::swap;
+
 
 void Cube::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -19,7 +21,7 @@ void Cube::display() {
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, -0.5);
             glEnd();
 
-            glRotatef(-90.0f,0.0f,0.0f,1.0f);
+            glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(back[j][i].r, back[j][i].g, back[j][i].b);
@@ -29,8 +31,8 @@ void Cube::display() {
             glVertex3f(-0.18 + j * 0.34, 0.5 - i * 0.34, 0.5);
             glEnd();
 
-            glRotatef(90.0f,0.0f,0.0f,1.0f);
-            glRotatef(90.0f,1.0f,0.0f,0.0f);
+            glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+            glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(right[j][i].r, right[j][i].g, right[j][i].b);
@@ -40,8 +42,8 @@ void Cube::display() {
             glVertex3f(0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
 
-            glRotatef(-90.0f,1.0f,0.0f,0.0f);
-            glRotatef(180.0f,1.0f,0.0f,0.0f);
+            glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+            glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(left[i][j].r, left[i][j].g, left[i][j].b);
@@ -51,7 +53,7 @@ void Cube::display() {
             glVertex3f(-0.5, -0.18 + i * 0.34, -0.5 + j * 0.34);
             glEnd();
 
-            glRotatef(-180.0f,1.0f,0.0f,0.0f);
+            glRotatef(-180.0f, 1.0f, 0.0f, 0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(down[j][i].r, down[j][i].g, down[j][i].b);
@@ -61,7 +63,7 @@ void Cube::display() {
             glVertex3f(-0.5 + i * 0.34, -0.5, -0.18 + j * 0.34);
             glEnd();
 
-            glRotatef(90.0f,0.0f,1.0f,0.0f);
+            glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
 
             glBegin(GL_POLYGON);
             glColor3f(up[i][j].r, up[i][j].g, up[i][j].b);
@@ -71,7 +73,7 @@ void Cube::display() {
             glVertex3f(-0.5 + i * 0.34, 0.5, -0.18 + j * 0.34);
             glEnd();
 
-            glRotatef(-90.0f,0.0f,1.0f,0.0f);
+            glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
 
         }
     glFlush();
@@ -79,7 +81,7 @@ void Cube::display() {
 
 }
 
-void rotate(rgbPairs** matrix) {
+void rotate(rgbPairs **matrix) {
     for (int i = 0; i < 3; i++) {
         for (int j = i; j < 3; j++) {
             rgbPairs tmp = matrix[i][j];
@@ -97,7 +99,7 @@ void rotate(rgbPairs** matrix) {
     }
 }
 
-void rotate_back(rgbPairs** matrix){
+void rotate_back(rgbPairs **matrix) {
     for (int i = 0; i < 3; i++) {
         for (int j = i; j < 3; j++) {
             rgbPairs tmp = matrix[i][j];
@@ -116,19 +118,19 @@ void rotate_back(rgbPairs** matrix){
 }
 
 Cube::Cube() {
-    up = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    down = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    back = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    right = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    front = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    left = (rgbPairs**) malloc(3*sizeof (rgbPairs*));
-    for(int i = 0; i < 3; i++){
-        front[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
-        left[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
-        up[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
-        down[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
-        back[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
-        right[i] = (rgbPairs*) malloc(3*sizeof(rgbPairs));
+    up = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    down = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    back = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    right = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    front = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    left = (rgbPairs **) malloc(3 * sizeof(rgbPairs *));
+    for (int i = 0; i < 3; i++) {
+        front[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
+        left[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
+        up[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
+        down[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
+        back[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
+        right[i] = (rgbPairs *) malloc(3 * sizeof(rgbPairs));
     }
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
@@ -138,9 +140,8 @@ Cube::Cube() {
             right[i][j] = r;
             up[i][j] = w;
             down[i][j] = y;
-        }
-    void ((*functptr[8]))();
-    functptr[0] = L();
+        };
+
 }
 
 void Cube::U() {
@@ -160,59 +161,59 @@ void Cube::D_() {
 
 void Cube::F() {
     swap(up[2][0], right[0][0]);
-    swap(up[2][1],right[1][0]);
+    swap(up[2][1], right[1][0]);
     swap(up[2][2], right[2][0]);
     swap(up[2][0], down[0][2]);
     swap(up[2][1], down[0][1]);
     swap(up[2][2], down[0][0]);
     swap(up[2][0], left[2][2]);
     swap(up[2][1], left[1][2]);
-    swap(up[2][2],left[0][2]);
+    swap(up[2][2], left[0][2]);
     rotate(front);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::R_() {
-    swap(front[0][2],down[0][2]);
-    swap(front[1][2],down[1][2]);
-    swap(front[2][2],down[2][2]);
-    swap(front[0][2],back[2][0]);
-    swap(front[1][2],back[1][0]);
-    swap(front[2][2],back[0][0]);
-    swap(front[0][2],up[0][2]);
-    swap(front[1][2],up[1][2]);
-    swap(front[2][2],up[2][2]);
+    swap(front[0][2], down[0][2]);
+    swap(front[1][2], down[1][2]);
+    swap(front[2][2], down[2][2]);
+    swap(front[0][2], back[2][0]);
+    swap(front[1][2], back[1][0]);
+    swap(front[2][2], back[0][0]);
+    swap(front[0][2], up[0][2]);
+    swap(front[1][2], up[1][2]);
+    swap(front[2][2], up[2][2]);
     rotate_back(right);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::B_() {
-    swap(right[0][2],down[2][2]);
-    swap(right[1][2],down[2][1]);
-    swap(right[2][2],down[2][0]);
-    swap(right[0][2],left[2][0]);
-    swap(right[1][2],left[1][0]);
-    swap(right[2][2],left[0][0]);
-    swap(right[0][2],up[0][0]);
-    swap(right[1][2],up[0][1]);
-    swap(right[2][2],up[0][2]);
+    swap(right[0][2], down[2][2]);
+    swap(right[1][2], down[2][1]);
+    swap(right[2][2], down[2][0]);
+    swap(right[0][2], left[2][0]);
+    swap(right[1][2], left[1][0]);
+    swap(right[2][2], left[0][0]);
+    swap(right[0][2], up[0][0]);
+    swap(right[1][2], up[0][1]);
+    swap(right[2][2], up[0][2]);
     rotate_back(back);
     display();
     std::this_thread::sleep_for(100ms);
 }
 
 void Cube::L() {
-    swap(front[0][0],down[0][0]);
-    swap(front[1][0],down[1][0]);
-    swap(front[2][0],down[2][0]);
-    swap(front[0][0],back[2][2]);
+    swap(front[0][0], down[0][0]);
+    swap(front[1][0], down[1][0]);
+    swap(front[2][0], down[2][0]);
+    swap(front[0][0], back[2][2]);
     swap(front[1][0], back[1][2]);
-    swap(front[2][0],back[0][2]);
+    swap(front[2][0], back[0][2]);
     swap(front[0][0], up[0][0]);
-    swap(front[1][0],up[1][0]);
-    swap(front[2][0],up[2][0]);
+    swap(front[1][0], up[1][0]);
+    swap(front[2][0], up[2][0]);
     rotate(left);
     display();
     std::this_thread::sleep_for(100ms);
@@ -258,28 +259,284 @@ void Cube::L_() {
     L();
 }
 
+void Cube::pick_rotation(int side, int rotate) {
+    if (side == 0) {
+        if (rotate == 0) {
+            L();
+            return;
+        }
+        if (rotate == 1) {
+            L_();
+            return;
+        }
+        if (rotate == 2) {
+            R_();
+            return;
+        }
+        if (rotate == 3) {
+            R();
+            return;
+        }
+        if (rotate == 4) {
+            B();
+            return;
+        }
+        if (rotate == 5) {
+            B_();
+            return;
+        }
+        if (rotate == 6) {
+            F_();
+            return;
+        }
+        if (rotate == 7) {
+            F();
+            return;
+        }
+        if (rotate == 8) {
+            U_();
+            return;
+        }
+        if (rotate == 9) {
+            U();
+            return;
+        }
+    }
+    if (side == 1) {
+        if (rotate == 0) {
+            L();
+            return;
+        }
+        if (rotate == 1) {
+            L_();
+            return;
+        }
+        if (rotate == 2) {
+            R_();
+            return;
+        }
+        if (rotate == 3) {
+            R();
+            return;
+        }
+        if (rotate == 4) {
+            F();
+            return;
+        }
+        if (rotate == 5) {
+            F_();
+            return;
+        }
+        if (rotate == 6) {
+            B_();
+            return;
+        }
+        if (rotate == 7) {
+            B();
+            return;
+        }
+        if (rotate == 8) {
+            D_();
+            return;
+        }
+        if (rotate == 9) {
+            D();
+            return;
+        }
+    }
+    if (side == 2) {
+        if (rotate == 0) {
+            B();
+            return;
+        }
+        if (rotate == 1) {
+            B_();
+            return;
+        }
+        if (rotate == 2) {
+            F_();
+            return;
+        }
+        if (rotate == 3) {
+            F();
+            return;
+        }
+        if (rotate == 4) {
+            U();
+            return;
+        }
+        if (rotate == 5) {
+            U_();
+            return;
+        }
+        if (rotate == 6) {
+            D_();
+            return;
+        }
+        if (rotate == 7) {
+            D();
+            return;
+        }
+        if (rotate == 8) {
+            L_();
+            return;
+        }
+        if (rotate == 9) {
+            L();
+            return;
+        }
+    }
+    if (side == 3) {
+        if (rotate == 0) {
+            L();
+            return;
+        }
+        if (rotate == 1) {
+            L_();
+            return;
+        }
+        if (rotate == 2) {
+            R_();
+            return;
+        }
+        if (rotate == 3) {
+            R();
+            return;
+        }
+        if (rotate == 4) {
+            U();
+            return;
+        }
+        if (rotate == 5) {
+            U_();
+            return;
+        }
+        if (rotate == 6) {
+            D_();
+            return;
+        }
+        if (rotate == 7) {
+            D();
+            return;
+        }
+        if (rotate == 8) {
+            F_();
+            return;
+        }
+        if (rotate == 9) {
+            F();
+            return;
+        }
+    }
+    if (side == 4) {
+        if (rotate == 0) {
+            F();
+            return;
+        }
+        if (rotate == 1) {
+            F_();
+            return;
+        }
+        if (rotate == 2) {
+            B_();
+            return;
+        }
+        if (rotate == 3) {
+            B();
+            return;
+        }
+        if (rotate == 4) {
+            U();
+            return;
+        }
+        if (rotate == 5) {
+            U_();
+            return;
+        }
+        if (rotate == 6) {
+            D_();
+            return;
+        }
+        if (rotate == 7) {
+            D();
+            return;
+        }
+        if (rotate == 8) {
+            R_();
+            return;
+        }
+        if (rotate == 9) {
+            R();
+            return;
+        }
+    }
+    if (side == 5) {
+        if (rotate == 0) {
+            R();
+            return;
+        }
+        if (rotate == 1) {
+            R_();
+            return;
+        }
+        if (rotate == 2) {
+            L_();
+            return;
+        }
+        if (rotate == 3) {
+            L();
+            return;
+        }
+        if (rotate == 4) {
+            U();
+            return;
+        }
+        if (rotate == 5) {
+            U_();
+            return;
+        }
+        if (rotate == 6) {
+            D_();
+            return;
+        }
+        if (rotate == 7) {
+            D();
+            return;
+        }
+        if (rotate == 8) {
+            B_();
+            return;
+        }
+        if (rotate == 9) {
+            B();
+            return;
+        }
+    }
+}
+
+
 void Cube::Solve() {
-    rgbPairs** tmp;
-    for(int k = 0; k < 6; k++){
+    rgbPairs **tmp;
+    for (int k = 0; k < 6; k++) {
         tmp = *sides[k];
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                if(tmp[i][j] == w){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tmp[i][j] == w) {
                     std::cout << 'w' << " ";
                 }
-                if(tmp[i][j] == y){
+                if (tmp[i][j] == y) {
                     std::cout << 'y' << " ";
                 }
-                if(tmp[i][j] == r){
+                if (tmp[i][j] == r) {
                     std::cout << 'r' << " ";
                 }
-                if(tmp[i][j] == g){
+                if (tmp[i][j] == g) {
                     std::cout << 'g' << " ";
                 }
-                if(tmp[i][j] == b){
+                if (tmp[i][j] == b) {
                     std::cout << 'b' << " ";
                 }
-                if(tmp[i][j] == o){
+                if (tmp[i][j] == o) {
                     std::cout << 'o' << " ";
                 }
             }
@@ -288,649 +545,293 @@ void Cube::Solve() {
         std::cout << "\n\n";
     }
     Phase_1();
-
+    Phase_2();
+    Phase_3();
 }
 
-int Cube::find_side(rgbPairs color){
-    if(color == w){
+int Cube::find_side(rgbPairs color) {
+    if (color == w) {
         return 0;
     }
-    if(color == y){
+    if (color == y) {
         return 1;
     }
-    if(color == g){
-        return 2;
-    }
-    if(color == b){
+    if (color == g) {
         return 3;
     }
-    if(color == o){
-        return 4;
-    }
-    if(color == r){
+    if (color == b) {
         return 5;
     }
-}
-
-rgbPairs Cube::find_another_color(char side, int i, int j){
-    if(side == 'l'){
-        if(i == 1){
-            if(j == 0){
-                return front[1][0];
-            } else{
-                return back[1][0];
-            }
-        } else if (i == 0){
-            return down[0][1];
-        } else {
-            return up[0][1];
-        }
+    if (color == o) {
+        return 2;
     }
-
-    if(side == 'r'){
-        if(i == 1){
-            if(j == 0){
-                return front[1][2];
-            } else{
-                return back[1][2];
-            }
-        } else if (i == 0){
-            return down[2][1];
-        } else {
-            return up[2][1];
-        }
-    }
-
-    if(side == 'u'){
-        if(i == 1){
-            if(j == 0){
-                return back[0][1];
-            } else{
-                return front[0][1];
-            }
-        } else if (i == 0){
-            return left[2][1];
-        } else {
-            return right[2][1];
-        }
-    }
-
-    if(side == 'd'){
-        if(i == 1){
-            if(j == 0){
-                return front[2][1];
-            } else{
-                return back[2][1];
-            }
-        } else if (i == 0){
-            return left[0][1];
-        } else {
-            return right[0][1];
-        }
-    }
-
-    if(side == 'f'){
-        if(i == 1){
-            if(j == 0){
-                return left[1][0];
-            } else{
-                return right[1][0];
-            }
-        } else if (i == 0){
-            return up[1][2];
-        } else {
-            return down[1][0];
-        }
-    }
-
-    if(side == 'b'){
-        if(i == 1){
-            if(j == 0){
-                return left[1][2];
-            } else{
-                return right[1][2];
-            }
-        } else if (i == 0){
-            return up[1][0];
-        } else {
-            return down[1][2];
-        }
+    if (color == r) {
+        return 4;
     }
 }
 
-void Cube::cross_turn(int right_side){
-    if(right_side == 2){
-        D();
-        R();
-        F_();
-        R_();
-    } else if (right_side == 3){
-        D();
-        L();
-        B_();
-        L_();
-    } else if (right_side == 4){
-        D();
-        F();
-        L_();
-        F_();
-    } else if(right_side == 5){
-        D();
-        B();
-        R_();
-        B_();
+rgbPairs Cube::find_another_color(int side, int i, int j) {
+    if (side == 0) {
+        if (i == 1) {
+            if (j == 0) {
+                return left[0][1];
+            } else {
+                return right[0][1];
+            }
+        } else if (i == 0) {
+            return back[0][1];
+        } else {
+            return front[0][1];
+        }
+    }
+    if (side == 1) {
+        if (i == 1) {
+            if (j == 0) {
+                return left[2][1];
+            } else {
+                return right[2][1];
+            }
+        } else if (i == 0) {
+            return front[2][1];
+        } else {
+            return back[2][1];
+        }
+    }
+    if (side == 2) {
+        return down[1][0];
+    }
+    if (side == 3) {
+        return down[0][1];
+    }
+    if (side == 4) {
+        return down[1][2];
+    }
+    if (side == 5) {
+        return down[2][1];
+    }
+}
+
+rgbPairs Cube::find_down_side(int side) {
+    if (side == 2) {
+        return down[0][0];
+    }
+    if (side == 3) {
+        return down[0][2];
+    }
+    if (side == 4) {
+        return down[2][2];
+    }
+    if (side == 5) {
+        return down[2][0];
     }
 }
 
 void Cube::Phase_1() {
-    int side_counter = 0,right_side;
+    int side_counter = 0, right_side;
     rgbPairs another_color;
-    rgbPairs** tmp_side;
+    rgbPairs **tmp_side;
+    rgbPairs **tmp_side_2;
 
-    while (up[1][2] != w || up[1][0] != w || up[0][1] != w || up[2][1] != w){
-        side_counter = (side_counter+1)%6;
-        if(side_counter == 0) {
+    while (up[1][2] != w || up[1][0] != w || up[0][1] != w || up[2][1] != w) {
+        side_counter = (side_counter + 1) % 6;
+        if (side_counter == 0) {
             side_counter++;
         }
-        if(side_counter == 1) {
-            if(down[1][0] == w){
-                another_color = find_another_color('d',1,0);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
-                        D();
-                    }
-                    F();
-                    F();
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
-                        D();
-                    }
-                    B();
-                    B();
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
-                        D();
-                    }
-                    L();
-                    L();
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
-                        D();
-                    }
-                    R();
-                    R();
-                }
-            }
-            if(down[1][2] == w){
-                another_color = find_another_color('d',1,2);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
-                        D();
-                    }
-                    F();
-                    F();
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
-                        D();
-                    }
-                    B();
-                    B();
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
-                        D();
-                    }
-                    L();
-                    L();
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
-                        D();
-                    }
-                    R();
-                    R();
-                }
-            }
-            if(down[0][1] == w){
-                another_color = find_another_color('d',0,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
-                        D();
-                    }
-                    F();
-                    F();
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
-                        D();
-                    }
-                    B();
-                    B();
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
-                        D();
-                    }
-                    L();
-                    L();
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
-                        D();
-                    }
-                    R();
-                    R();
-                }
-            }
-            if(down[2][1] == w){
-                another_color = find_another_color('d',2,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != another_color || (find_another_color('f',2,1) != w)){
-                        D();
-                    }
-                    F();
-                    F();
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != another_color || (find_another_color('b',2,1) != w)){
-                        D();
-                    }
-                    B();
-                    B();
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != another_color || (find_another_color('l',0,1) != w)){
-                        D();
-                    }
-                    L();
-                    L();
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != another_color || (find_another_color('r',0,1) != w)){
-                        D();
-                    }
-                    R();
-                    R();
-                }
-            }
-        } else if(side_counter == 2){
-            if(front[1][2] == w){
-                R_();
-                D();
-                R();
-                side_counter = 0;
+        if (side_counter == 1) {
+            if (down[1][2] == w) {
+                another_color = right[2][1];
+            } else if (down[1][0] == w) {
+                another_color = left[2][1];
+            } else if (down[0][1] == w) {
+                another_color = front[2][1];
+            } else if (down[2][1] == w) {
+                another_color = back[2][1];
+            } else {
                 continue;
-            } else if (front[1][0] == w){
-                L();
-                D();
-                L_();
-                side_counter = 0;
-                continue;
-            } else if (front[2][1] == w){
-                another_color = find_another_color('f',2,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
-            } else if (front[0][1] == w){
-                F();
-                F();
-                another_color = find_another_color('f',2,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
             }
-        } else if (side_counter == 3){
-            if(back[1][0] == w){
-                L_();
+            right_side = find_side(another_color);
+            tmp_side = *sides[right_side];
+            while (tmp_side[2][1] != another_color || find_another_color(right_side, 0, 0) != w) {
                 D();
-                L();
-                side_counter = 0;
-                continue;
-            } else if (back[1][2] == w){
-                R();
-                D();
-                R_();
-                side_counter = 0;
-                continue;
-            } else if (back[2][1] == w){
-                another_color = find_another_color('b',2,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
-            } else if (back[0][1] == w){
-                B();
-                B();
-                another_color = find_another_color('b',2,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
             }
-        } else if (side_counter == 4){
-            if(left[1][0] == w){
-                F_();
+            pick_rotation(right_side, 8);
+            pick_rotation(right_side, 8);
+            continue;
+        }
+        tmp_side = *sides[side_counter];
+        another_color = find_another_color(side_counter, 0, 0);
+        right_side = find_side(another_color);
+        tmp_side_2 = *sides[right_side];
+        if (tmp_side[2][1] == w) {
+            while (find_another_color(right_side, 0, 0) != another_color || tmp_side_2[2][1] != w) {
                 D();
-                F();
-                side_counter = 0;
-                continue;
-            } else if (left[1][2] == w){
-                B();
-                D();
-                B_();
-                side_counter = 0;
-                continue;
-            } else if (left[0][1] == w){
-                another_color = find_another_color('l',0,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
-            } else if (left[2][1] == w){
-                L();
-                L();
-                another_color = find_another_color('l',0,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
+                side_counter = (side_counter + 1) % 6;
+                if (side_counter == 0 || side_counter == 1)
+                    side_counter = 2;
             }
-        } else if (side_counter == 5){
-            if(right[1][2] == w){
-                B_();
-                D();
-                B();
-                side_counter = 0;
-                continue;
-            } else if (right[1][0] == w){
-                F();
-                D();
-                F_();
-                side_counter = 0;
-                continue;
-            } else if (right[0][1] == w){
-                another_color = find_another_color('r',0,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
-            } else if (right[2][1] == w){
-                R();
-                R();
-                another_color = find_another_color('r',0,1);
-                right_side = find_side(another_color);
-                tmp_side = *sides[right_side];
-                if(right_side == 2){
-                    while(tmp_side[2][1] != w || (find_another_color('f',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 3){
-                    while (tmp_side[2][1] != w || (find_another_color('b',2,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 4){
-                    while (tmp_side[0][1] != w || (find_another_color('l',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                } else if(right_side == 5){
-                    while (tmp_side[0][1] != w || (find_another_color('r',0,1) != another_color)){
-                        D();
-                    }
-                    cross_turn(right_side);
-                }
-            }
+            D();
+            pick_rotation(side_counter, 3);
+            pick_rotation(side_counter, 8);
+            pick_rotation(side_counter, 2);
+            continue;
+        }
+        if (tmp_side[1][0] == w) {
+            pick_rotation(side_counter, 8);
+            D();
+            pick_rotation(side_counter, 9);
+        }
+        if (tmp_side[1][2] == w) {
+            pick_rotation(side_counter, 9);
+            D();
+            pick_rotation(side_counter, 8);
+        }
+        if (tmp_side[0][1] == w) {
+            pick_rotation(side_counter, 8);
+            pick_rotation(side_counter, 8);
+            D();
+            pick_rotation(side_counter, 9);
+            pick_rotation(side_counter, 9);
         }
     }
 }
 
 void Cube::Phase_2() {
     int side_counter = 0;
-    rgbPairs** tmp_side;
-    while (up[0][0] != w || up[0][2] != w || up[2][0] != w || up[2][2] != w){
-        side_counter = (side_counter+1)%6;
-        if(side_counter == 0){
+    rgbPairs another_color;
+    rgbPairs **tmp_side;
+    while (up[0][0] != w || up[0][2] != w || up[2][0] != w || up[2][2] != w) {
+        side_counter = (side_counter + 1) % 6;
+        if (side_counter == 0 || side_counter == 1) {
+            side_counter = 2;
+        }
+        tmp_side = *sides[side_counter];
+        if (tmp_side[2][0] == w) {
+            if (side_counter == 2) {
+                side_counter = 6;
+            }
+            tmp_side = *sides[--side_counter];
+            while (tmp_side[1][1] != tmp_side[2][2]) {
+                D();
+                if (side_counter == 5) {
+                    side_counter = 1;
+                }
+                tmp_side = *sides[++side_counter];
+            }
+            pick_rotation(side_counter, 2);
+            D_();
+            pick_rotation(side_counter, 3);
+        }
+        if (tmp_side[2][2] == w) {
+            another_color = find_down_side(side_counter);
+            while (tmp_side[1][1] != another_color) {
+                D();
+                if (side_counter == 5) {
+                    side_counter = 1;
+                }
+                tmp_side = *sides[++side_counter];
+            }
+            pick_rotation(side_counter, 9);
+            D();
+            pick_rotation(side_counter, 8);
+        }
+        if (find_down_side(side_counter) == w) {
+            another_color = tmp_side[2][2];
+            while (tmp_side[1][1] != another_color) {
+                D();
+                if (side_counter == 5) {
+                    side_counter = 1;
+                }
+                tmp_side = *sides[++side_counter];
+            }
+            D_();
+            pick_rotation(side_counter, 8);
+            pick_rotation(side_counter, 2);
+            D();
+            D();
+            pick_rotation(side_counter, 3);
+            pick_rotation(side_counter, 9);
+        }
+        if (tmp_side[0][0] == w) {
+            pick_rotation(side_counter, 8);
+            D();
+            pick_rotation(side_counter, 9);
+        }
+        if (tmp_side[0][2] == w) {
+            pick_rotation(side_counter, 9);
+            D();
+            pick_rotation(side_counter, 8);
+        }
+    }
+}
+
+void Cube::Phase_3() {
+    int side_counter = 0;
+    rgbPairs another_color;
+    rgbPairs **tmp_side;
+    rgbPairs **l;
+    while (front[1][0] != g || front[1][2] != g || left[1][0] != o || left[1][2] != o || right[1][0] != r ||
+           right[1][2] != r || back[1][0] != b || back[1][2] != b) {
+        side_counter = (side_counter + 1) % 6;
+        if (side_counter == 0 || side_counter == 1) {
+            side_counter = 2;
+        }
+        tmp_side = *sides[side_counter];
+        if(tmp_side[1][0] != tmp_side[1][1]){
+            pick_rotation(side_counter,8);
+            D_();
+            pick_rotation(side_counter,9);
+            D();
+            pick_rotation(side_counter,0);
+            D();
+            pick_rotation(side_counter,1);
+            D_();
+        } else if (tmp_side[1][2] != tmp_side[1][1]){
+            pick_rotation(side_counter,9);
+            D();
+            pick_rotation(side_counter,8);
+            D_();
+            pick_rotation(side_counter,2);
+            D_();
+            pick_rotation(side_counter,3);
+            D();
+        }
+        another_color = find_another_color(side_counter, 0, 0);
+        if (another_color == y || tmp_side[2][1] == y) {
             continue;
         }
-        if(side_counter == 1){
-            if(down[0][0] == w){
-                F_();
-                R_();
-                D();
-                D();
-                R();
-                F();
-            } else if(down[2][0] == w){
-                R_();
-                B_();
-                D();
-                D();
-                B();
-                R();
-            } else if(down[0][2] == w){
-                L_();
-                F_();
-                D();
-                D();
-                F();
-                L();
-            } else if(down[2][2] == w){
-                B_();
-                L_();
-                D();
-                D();
-                L();
-                B();
+        while (tmp_side[1][1] != tmp_side[2][1]) {
+            D();
+            if (side_counter == 5) {
+                side_counter = 1;
             }
-        } else if(side_counter == 2){
-            if(front[2][0] == w){
-                F_();
-                D_();
-                F();
-            } else if(front[2][2] == w){
-                F();
-                D();
-                F_();
-            } else if(front[0][0] == w){
-                F_();
-                D();
-                F();
-            } else if(front[2][0] == w){
-                F();
-                D_();
-                F_();
-            }
-        } else if (side_counter == 3){
-            if(back[2][2] == w){
-                B_();
-                D_();
-                B();
-            } else if(back[2][0] == w){
-                B();
-                D();
-                B_();
-            } else if(back[0][2] == w){
-                B_();
-                D();
-                B();
-            } else if(back[0][0] == w){
-                B();
-                D_();
-                B_();
-            }
-        } else if (side_counter == 4){
-            if(left[0][2] == w){
-                L_();
-                D_();
-                L();
-            } else if(left[0][0] == w){
-                L();
-                D();
-                L_();
-            } else if(left[2][2] == w){
-                L_();
-                D();
-                L();
-            } else if(left[2][0] == w){
-                L();
-                D_();
-                L_();
-            }
-        } else if (side_counter == 5){
-            if(right[0][0] == w){
-                R_();
-                D_();
-                R();
-            } else if(right[0][2] == w){
-                R();
-                D();
-                R_();
-            } else if(right[2][0] == w){
-                R_();
-                D();
-                R();
-            } else if(right[2][2] == w){
-                R();
-                D_();
-                R_();
-            }
+            tmp_side = *sides[++side_counter];
+        }
+        if (side_counter == 0 || side_counter == 1) {
+            side_counter = 2;
+        }
+        if (side_counter == 2) {
+            l = *sides[5];
+        } else {
+            l = *sides[side_counter - 1];
+        }
+        if (another_color == l[1][1]) {
+            D();
+            pick_rotation(side_counter, 0);
+            D_();
+            pick_rotation(side_counter, 1);
+            D_();
+            pick_rotation(side_counter, 8);
+            D();
+            pick_rotation(side_counter, 9);
+        } else {
+            D_();
+            pick_rotation(side_counter, 2);
+            D();
+            pick_rotation(side_counter, 3);
+            D();
+            pick_rotation(side_counter, 9);
+            D_();
+            pick_rotation(side_counter, 8);
         }
     }
 }

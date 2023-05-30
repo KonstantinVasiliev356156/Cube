@@ -51,8 +51,8 @@ public:
     rgbPairs** right;
     rgbPairs** up;
     rgbPairs** down;
-    rgbPairs*** sides[6] = {&up,&down,&front,&back,&left,&right};
-    std::function<void()>[6] rotations;
+    rgbPairs*** sides[6] = {&up,&down,&left,&front,&right,&back};
+
     Cube();
     ~Cube() = default;
     void display();
@@ -68,13 +68,18 @@ public:
     void R_();
     void U_();
     void D_();
+    void (*rotations[6][8])();
 
     int find_side(rgbPairs);
-    rgbPairs find_another_color(char, int , int );
+    rgbPairs find_another_color(int, int , int );
+    rgbPairs find_down_side(int side);
     void cross_turn(int);
+    void pick_rotation(int,int);
     void Phase_1();
     void Phase_2();
+    void Phase_3();
     void Solve();
+
 };
 
 
