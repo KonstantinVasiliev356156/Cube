@@ -62,7 +62,7 @@ public:
     void R_();
     void U_();
     void D_();
-
+    void pattern_angle_rotation();
     int find_side(rgbPairs);
     rgbPairs find_another_color(char, int , int );
     void cross_turn(int);
