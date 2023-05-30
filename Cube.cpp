@@ -159,7 +159,12 @@ void Cube::L_() {
     L();
     L();
 }
-
+void Cube::pattern_angle_rotation() {
+    R();
+    U();
+    R_();
+    U_();
+}
 void Cube::Solve() {
     Phase_1();
 }
