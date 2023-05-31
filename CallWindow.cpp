@@ -153,6 +153,8 @@ void CallWindow::specialKeys(int key, int x, int y) {
         cube.R();
     else if (key == GLUT_KEY_F12)
         cube.R_();
+    else if (key == GLUT_KEY_ALT_L)
+        cube.C();
     glutPostRedisplay();
 
 }

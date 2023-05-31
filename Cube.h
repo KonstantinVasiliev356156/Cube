@@ -68,6 +68,7 @@ public:
     void R_();
     void U_();
     void D_();
+    void C();
     void (*rotations[6][8])();
 
     int find_side(rgbPairs);
@@ -78,6 +79,10 @@ public:
     void Phase_1();
     void Phase_2();
     void Phase_3();
+    void Phase_4();
+    void Phase_5();
+    void Phase_6();
+    void Phase_7();
     void Solve();
 
 };
