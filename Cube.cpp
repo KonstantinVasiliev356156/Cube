@@ -550,7 +550,9 @@ void Cube::Solve() {
     Phase_2();
     Phase_3();
     Phase_4();
-
+    Phase_5();
+    Phase_6();
+    Phase_7();
 }
 
 int Cube::find_side(rgbPairs color) {
@@ -735,7 +737,7 @@ void Cube::Phase_2() {
     int side_counter = 0;
     rgbPairs another_color;
     rgbPairs **tmp_side;
-    while (up[0][0] != w || up[0][2] != w || up[2][0] != w || up[2][2] != w) {
+    while (up[0][0] != w || up[0][2] != w || up[2][0] != w || up[2][2] != w || left[0][2] != o || front[0][2] != g || right[0][2] != r || back[0][2] != b) {
         side_counter = (side_counter + 1) % 6;
         if (side_counter == 0 || side_counter == 1) {
             side_counter = 2;
@@ -787,12 +789,12 @@ void Cube::Phase_2() {
             pick_rotation(side_counter, 3);
             pick_rotation(side_counter, 9);
         }
-        if (tmp_side[0][0] == w) {
+        if (tmp_side[0][0] == w || tmp_side[0][0] != tmp_side[1][1]) {
             pick_rotation(side_counter, 8);
             D();
             pick_rotation(side_counter, 9);
         }
-        if (tmp_side[0][2] == w) {
+        if (tmp_side[0][2] == w || tmp_side[0][2] != tmp_side[1][1]) {
             pick_rotation(side_counter, 9);
             D();
             pick_rotation(side_counter, 8);
@@ -898,7 +900,7 @@ void Cube::Phase_4(){
         D_();
         B_();
         return;
-    } else if (down[0][1] == y && down[2][0] == y){
+    } else if (down[0][1] == y && down[2][1] == y){
         L();
         B();
         D();
@@ -918,95 +920,42 @@ void Cube::Phase_4(){
     B_();
 }
 
+void Cube::varp_rotation(int side){
+    pick_rotation(side,0);
+    D();
+    pick_rotation(side,1);
+    D();
+    pick_rotation(side,0);
+    D();
+    D();
+    pick_rotation(side,1);
+    D();
+}
+
 void Cube::Phase_5(){
-    int side_counter = 2;
-    rgbPairs **tmp_side;
-    rgbPairs **r_side;
-    rgbPairs **b_side;
-    if(down[0][1] != y && down[1][0] != y && down[1][2] != y && down[2][1] != y){
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
-        D_();
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
-        pick_rotation(side_counter,3);
-        C();
+    while (front[2][1] != g){
         D();
     }
-    while (left[2][1] != o || front[2][1] != g || right[2][1] != r || back[2][1] != b){
-        side_counter = (side_counter+1)%6;
-        if(side_counter == 0 || side_counter == 1){
-            side_counter = 2;
-        }
-        tmp_side = *sides[side_counter];
-        if (side_counter == 5) {
-            r_side = *sides[2];
-        } else {
-            r_side = *sides[side_counter+1];
-        }
-        if (side_counter == 4) {
-            b_side = *sides[2];
-        } else if (side_counter == 5){
-            b_side = *sides[3];
-        } else {
-            b_side = *sides[side_counter+2];
-        }
-        if(tmp_side[2][1] == y && r_side[2][1] == y){
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            D_();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            D();
-        }
-        if(tmp_side[2][1] == y && b_side[2][1] == y){
-            side_counter--;
-            if(side_counter == 1){
-                side_counter =5;
-            }
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            D_();
-            D_();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            pick_rotation(side_counter,3);
-            C();
-            D();
-            D();
-        }
+    if(right[2][1] == b){
+        varp_rotation(4);
+    }
+    if (right[2][1] == o){
+        varp_rotation(4);
+        varp_rotation(5);
+    }
+    if(back[2][1] == o){
+        varp_rotation(5);
+    }
+    if(back[2][1] == r){
+        L_();
+        D_();
+        L();
+        D_();
+        L_();
+        D_();
+        D_();
+        L();
+        D_();
     }
 }
 
@@ -1015,54 +964,53 @@ void Cube::Phase_6(){
     if(((front[2][0] == g && left[2][2] == o && down[0][0] == y) || (front[2][0] == g && left[2][2] == y && down[0][0] == o) || (front[2][0] == o && left[2][2] == y && down[0][0] == g)
         || (front[2][0] == o && left[2][2] == g && down[0][0] == y) || (front[2][0] == y && left[2][2] == g && down[0][0] == o) || (front[2][0] == y && left[2][2] == o && down[0][0] == g))){
         counter++;
-        side_counter = 5;
+        side_counter = 3;
     }
     if((front[2][2] == g && right[2][0] == r && down[0][2] == y) || (front[2][2] == g && right[2][0] == y && down[0][2] == r) || (front[2][2] == r && right[2][0] == y && down[0][2] == g)
        || (front[2][2] == r && right[2][0] == g && down[0][2] == y) || (front[2][2] == y && right[2][0] == g && down[0][2] == r) || (front[2][2] == y && right[2][0] == r && down[0][2] == g)){
         counter++;
-        side_counter = 2;
+        side_counter = 4;
     }
     if((left[2][0] == o && back[2][2] == b && down[2][0] == y) || (left[2][0] == o && back[2][2] == y && down[2][0] == b) || (left[2][0] == b && back[2][2] == y && down[2][0] == o)
        || (left[2][0] == b && back[2][2] == o && down[2][0] == y) || (left[2][0] == y && back[2][2] == o && down[2][0] == b) || (left[2][0] == y && back[2][2] == b && down[2][0] == o)){
         counter++;
-        side_counter = 4;
+        side_counter = 2;
     }
     if((right[2][2] == r && back[2][0] == b && down[2][2] == y) || (right[2][2] == r && back[2][0] == y && down[2][2] == b) || (right[2][2] == b && back[2][0] == y && down[2][2] == r)
        || (right[2][2] == b && back[2][0] == r && down[2][2] == y) || (right[2][2] == y && back[2][0] == r && down[2][2] == b) || (right[2][2] == y && back[2][0] == b && down[2][2] == r)){
         counter++;
-        side_counter = 3;
+        side_counter = 5;
     }
     if(counter == 4){
         return;
     }
     if(counter == 1){
-        pick_rotation(side_counter,8);
-        pick_rotation(side_counter,2);
-        pick_rotation(side_counter,9);
-        pick_rotation(side_counter,1);
-        pick_rotation(side_counter,8);
-        pick_rotation(side_counter,3);
-        pick_rotation(side_counter,9);
+        D();
         pick_rotation(side_counter,0);
+        D_();
+        pick_rotation(side_counter,2);
+        D();
+        pick_rotation(side_counter,1);
+        D_();
+        pick_rotation(side_counter,3);
         Phase_6();
         return;
     }
     if(counter == 0){
-        pick_rotation(side_counter,8);
-        pick_rotation(side_counter,2);
-        pick_rotation(side_counter,9);
-        pick_rotation(side_counter,1);
-        pick_rotation(side_counter,8);
-        pick_rotation(side_counter,3);
-        pick_rotation(side_counter,9);
+        D();
         pick_rotation(side_counter,0);
+        D_();
+        pick_rotation(side_counter,2);
+        D();
+        pick_rotation(side_counter,1);
+        D_();
+        pick_rotation(side_counter,3);
         Phase_6();
         return;
     }
 }
 
 void Cube::Phase_7(){
-    int side_counter = 1;
     while (down[0][0] != y || down[2][0] != y || down[0][2] != y || down[2][2] != y){
         while (down[0][0] != y){
             L_();
@@ -1071,5 +1019,8 @@ void Cube::Phase_7(){
             U();
         }
         D_();
+    }
+    while(front[2][1] != front[1][1]){
+        D();
     }
 }

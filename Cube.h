@@ -85,6 +85,7 @@ public:
     void Phase_7();
     void Solve();
 
+    void varp_rotation(int side);
 };
 
 
