@@ -550,9 +550,7 @@ void Cube::Solve() {
     Phase_2();
     Phase_3();
     Phase_4();
-    Phase_5();
-    Phase_6();
-    Phase_7();
+
 }
 
 int Cube::find_side(rgbPairs color) {
@@ -875,55 +873,49 @@ void Cube::Phase_3() {
 }
 
 void Cube::Phase_4(){
-    int side_counter = 0, l_side, r_side;
-    rgbPairs **tmp_side;
-    while(!(((front[2][1] == g && down[0][1] == y)||(front[2][1] == y && down[0][1] == g))&&((left[2][1] == o && down[1][0] == y)||(left[2][1] == y && down[1][0] == o))&&((right[2][1] == r && down[1][2] == y)||(right[2][1] == y && down[1][2] == r))&&((back[2][1] == b && down[2][1] == y)||(back[2][1] == y && down[2][1] == b)))){
-        side_counter = (side_counter+1)%6;
-        if(side_counter == 0 || side_counter == 1){
-            side_counter = 2;
-        }
-        tmp_side = *sides[side_counter];
-        if((tmp_side[2][1] == tmp_side[1][1] && find_another_color(side_counter,0,0) == y)||(tmp_side[2][1] == y && find_another_color(side_counter,0,0) == tmp_side[1][1])){
-            continue;
-        }
-        if (side_counter == 2) {
-            l_side = 5;
-        } else {
-            l_side = side_counter - 1;
-        }
-        if (side_counter == 5) {
-            r_side = 2;
-        } else {
-            r_side = side_counter + 1;
-        }
-        if(tmp_side[1][1] == find_another_color(l_side,0,0)){
-            D();
-            pick_rotation(side_counter,9);
-            pick_rotation(side_counter,0);
-            D();
-            pick_rotation(side_counter,1);
-            D_();
-            pick_rotation(side_counter,8);
-            continue;
-        }
-        if(tmp_side[1][1] == find_another_color(r_side,0,0)){
-            D_();
-            pick_rotation(side_counter,8);
-            pick_rotation(side_counter,2);
-            D_();
-            pick_rotation(side_counter,3);
-            D();
-            pick_rotation(side_counter,9);
-            continue;
-        }
-        D_();
-        pick_rotation(side_counter,8);
-        pick_rotation(side_counter,2);
-        D_();
-        pick_rotation(side_counter,3);
-        D();
-        pick_rotation(side_counter,9);
+    if(down[0][1] == y && down[1][0] == y && down[1][2] == y && down[2][1] == y){
+        return;
     }
+    if(down[0][1] != y && down[1][0] != y && down[1][2] != y && down[2][1] != y){
+        F();
+        D();
+        L();
+        D_();
+        L_();
+        F_();
+        L();
+        B();
+        D();
+        B_();
+        D_();
+        L_();
+        return;
+    } else if(down[1][0] == y && down[1][2] == y){
+        B();
+        R();
+        D();
+        R_();
+        D_();
+        B_();
+        return;
+    } else if (down[0][1] == y && down[2][0] == y){
+        L();
+        B();
+        D();
+        B_();
+        D_();
+        L_();
+        return;
+    }
+    while (down[0][1] != y || down[1][0] != y){
+        D();
+    }
+    B();
+    D();
+    R();
+    D_();
+    R_();
+    B_();
 }
 
 void Cube::Phase_5(){
